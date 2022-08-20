@@ -2,7 +2,7 @@ from digital_factor_base import DigitalFactor
 class lEntityDigitalFactor(DigitalFactor): 
     required_class_info = {
         "type_of_factor_owner": "lEntityDigitalFactor",
-        "buy_or_sale" : None,
+        "buy_or_sale" : None, #1 is for buy, 0 is for sale
         "type_of_buyer" : 1, # 1 = مشمول ثبتنام در نظام مالیاتی
         "company_name" : None,
         "company_code" : None, #شماره اقتصادی
@@ -17,8 +17,13 @@ class lEntityDigitalFactor(DigitalFactor):
         "avarez_arzesh_afzoodeh":None,
     }
 
-    def __init__(self) :
-        pass
+    def __init__(self,**kwargs):
+            for key,value in kwargs.items():
+                if value is not None :
+                    if value is float :
+                        self.required_class_info[key] = int(value)
+                    else :
+                        self.required_class_info[key] = value
 
     def fill_info(self, info: dict) :
         for data in info :
